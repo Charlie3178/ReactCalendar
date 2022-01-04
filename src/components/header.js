@@ -1,9 +1,21 @@
 import React from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowAltCircleRight } from '@fortawesome/free-solid-svg-icons';
+import { faArrowAltCircleLeft } from '@fortawesome/free-solid-svg-icons';
 
 export default function Header(props) {
-    return <div>
-        <button onClick={() => props.handleChange("previous")}>Previous</button>
+    return <div className="headerWrapper">
+        
+        <FontAwesomeIcon 
+        className="button"
+        onClick={() => props.handleChange("previous")}
+        icon={faArrowAltCircleLeft}
+        />
         <h1>{props.monthName}</h1>
-        <button onClick={() => props.handleChange("next")}>Next</button>
+        <FontAwesomeIcon 
+        className="button"
+        onClick={() => props.handleChange("next")}
+        icon={faArrowAltCircleRight}
+        />
     </div>
 }

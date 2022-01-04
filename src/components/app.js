@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+
+
 import ContentWrapper from './contentWrapper';
 import Footer from './footer';
 import Header from './header';
@@ -29,11 +31,11 @@ export default class App extends Component {
       monthdata: []
     }
 
-    this.handleChange = this.handleChange.bind(this)
+    this.handleChange = this.handleChange.bind(this);
   }
 
   calculateDateData() {
-    const now = new Date(2022, 0);
+    const now = new Date();
     const month = this.monthList[now.getMonth()]
     const year = now.getFullYear()
     return {month: month, year: year}
@@ -41,7 +43,7 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    fetch('http://127.0.0.1:5000/month/get')
+    fetch('https://api-calendar-cel.herokuapp.com/month/get')
     .then(response => response.json())
     .then(data => this.setState({
       monthData: data,
@@ -51,7 +53,7 @@ export default class App extends Component {
 
   handleChange(direction) {
     const currentMonthIndex = this.monthList.indexOf(this.state.month.name)
-    const newMonthName = this.monthList.indexOf[direction === "next" ? currentMonthIndex +1 : currentMonthIndex - 1]
+    const newMonthName = this.monthList[direction === "next" ? currentMonthIndex + 1 : currentMonthIndex - 1]
     const newMonthData = this.state.monthData.filter((month) => month.name === newMonthName)[0];
     this.setState({ month: newMonthData })
   }
@@ -62,9 +64,8 @@ export default class App extends Component {
         <Header 
         monthName={this.state.month.name} 
         handleChange = {this.handleChange}/>
-        <ContentWrapper 
-        />
-        <Footer />
+        <ContentWrapper month={this.state.month}/>
+        <Footer monthYear ={ this.state.month.year}/>
       </div>
     );
   }
